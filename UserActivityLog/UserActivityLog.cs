@@ -43,20 +43,24 @@ public class UserActivityLog
     /// <summary>
     /// Returns a human-readable activity statement of when username was last active. Will report time to the
     /// appropriate unit of time: minutes, hours, days, months, etc... If user does not exist or doesn't have
-    /// any timestamp (hasn't been active yet) will return string with error message
+    /// any timestamp (hasn't been active yet) will return string with error message. If unit count is only
+    /// 1 will return statement using non-plural form of that unit
     /// </summary>
     /// <param name="name"></param>
     /// <returns>
     /// A string representing the last activity state. Possible returns:
     /// <list type="number">
     /// <item>
-    /// <description> "Username does not exist" if no username found </description>
+    /// <description> "[Username] does not exist" if no username found </description>
     /// </item>
     /// <item>
-    /// <description>  "User has no recorded activity" if user hasn't been active </description>
+    /// <description>  "[Username] has no recorded activity" if user hasn't been active </description>
     /// </item>
     /// <item>
-    /// <description> ""User was active [x] [unit] ago" </description>
+    /// <description>  "[Username] is currently active" if user has been active within the last 60 seconds </description>
+    /// </item>
+    /// <item>
+    /// <description> "[Username] was active [x] [unit] ago" </description>
     /// </item>
     /// </list>
     /// </returns>
