@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("UserActivityLogTest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fe0e9c2c9e52194d475ff07562611156cbe57262")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c4546fa1c4c153b5b8c27cdf95e20151b5efcf19")]
 [assembly: System.Reflection.AssemblyProductAttribute("UserActivityLogTest")]
 [assembly: System.Reflection.AssemblyTitleAttribute("UserActivityLogTest")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
