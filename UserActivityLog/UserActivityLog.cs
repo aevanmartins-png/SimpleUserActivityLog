@@ -2,7 +2,8 @@
 
 /// <summary>
 /// This class keeps track of a list of users and when they were last active in. Gives a readable report of users activity
-/// which will scale to minutes, hours, days, etc.. appropriately. For example if user was active 
+/// which will scale to minutes, hours, days, etc.. appropriately. For example if user was active
+/// Also allows to get answer in mars time units inspired from technical interview question
 /// </summary>
 public class UserActivityLog
 {
@@ -31,7 +32,7 @@ public class UserActivityLog
 
     // A list of time units and how many seconds they represent
     // Must be added from the highest unit to lowest, where highest is unit representing most amount of seconds
-    private static readonly List<TimeUnit> Units = new()
+    private static readonly List<TimeUnit> EarthUnits = new()
     {
         // New units of time can be easily added here
         new("year", 31536000), //Assuming 365 days in a year
@@ -40,6 +41,20 @@ public class UserActivityLog
         new("hour", 3600),
         new("minute", 60),
     };
+    
+    // A list of time units and how many seconds they represent
+    // Must be added from the highest unit to lowest, where highest is unit representing most amount of seconds
+    private static readonly List<TimeUnit> MarsUnits = new()
+    {
+        // New units of time can be easily added here
+        new("martian year", 60988425), //687 days in martian year
+        new("martian month", 2485700), //28 sols in a month
+        new("sol", 88775),
+        new("hour", 3800),
+        new("minute", 61.65),
+    };
+    
+    
     
     
     /// <summary>
@@ -93,7 +108,7 @@ public class UserActivityLog
     /// any timestamp (hasn't been active yet) will return string with error message. If unit count is only
     /// 1 will return statement using non-plural form of that unit
     /// </summary>
-    /// <param name="username"></param>
+    /// <param name="username">name to look up activity statement for</param>
     /// <returns>
     /// A string representing the last activity state. Possible returns:
     /// <list type="number">
@@ -110,6 +125,29 @@ public class UserActivityLog
     /// </returns>
     public string GetLastActiveString(string username)
     {
+        return GetLastActiveString(username, EarthUnits);
+    }
+    
+    /// <summary>
+    /// Returns activity statement as described in <see cref="GetLastActiveString"/> but in Martian Units
+    /// </summary>
+    /// <param name="username">name to look up activity statement for</param>
+    /// <returns>Activity Statement based on when username was last active</returns>
+
+    public string GetLastActiveStringMarsTime(string username)
+    {
+        return GetLastActiveString(username, MarsUnits);
+    }
+    
+    
+    /// <summary>
+    /// Returns human readable statement based on units given. See <see cref="GetLastActiveString"/> for more details
+    /// </summary>
+    /// <param name="username">name to look up activity statement for</param>
+    /// <param name="units">Time unit to use to construct output statement</param>
+    /// <returns>Activity statement based on time unites passed in </returns>
+    private string GetLastActiveString(string username, List<TimeUnit> units) 
+    {
         if (!_userActivity.ContainsKey(username))
         {
             return $"{username} does not exist";
@@ -123,7 +161,7 @@ public class UserActivityLog
         double secondsElapsed = (DateTime.Now - lastActiveTime).TotalSeconds;
         
         //Start at highest unit and go down until correct unit is found
-        foreach (var unit in Units)
+        foreach (var unit in units)
         {
             if (secondsElapsed > unit.Seconds)
             {
