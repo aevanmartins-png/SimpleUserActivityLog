@@ -68,4 +68,14 @@ public sealed class UserActivityLogTest
         userActivityLog.UpdateUserActiveTime("am123",time);
         Assert.AreEqual("am123 was active 1 year ago", userActivityLog.GetLastActiveString("am123"));
     }
+    
+    [TestMethod]
+    public void GetLastActiveString_UserThatWasActiveASolAgo_ReturnsStringInMinutes()
+    {
+        UserActivityLog userActivityLog = new UserActivityLog();
+        userActivityLog.AddUsername("am123");
+        DateTime time = DateTime.Now.AddHours(-28);;
+        userActivityLog.UpdateUserActiveTime("am123",time);
+        Assert.AreEqual("am123 was active 1 sol ago", userActivityLog.GetLastActiveStringMarsTime("am123"));
+    }
 }
